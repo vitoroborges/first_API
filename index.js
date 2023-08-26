@@ -50,6 +50,20 @@ app.get('/game/:id', (req, res) => {
 
 })
 
+// Add game
+app.post('/game', (req, res) => {
+    let {title, year, price} = req.body
+
+    DB.games.push({
+        id: 35,
+        title,
+        year,
+        price
+    })
+
+    res.statusCode = 200
+})
+
 app.listen(8080, ()=>{
     console.log("API online")
 })
