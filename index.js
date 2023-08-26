@@ -33,6 +33,23 @@ app.get('/games', (req, res) => {
     res.json(DB.games)
 })
 
+app.get('/game/:id', (req, res) => {
+    if(isNaN(req.params.id)){
+        res.sendStatus(400)
+    } else{
+        let id = parseInt(req.params.id)
+        let game = DB.games.find(g=> g.id == id)
+
+        if(game != undefined){
+            res.statusCode = 200
+            res.json(game)
+        } else{
+            res.sendStatus(404)
+        }
+    }
+
+})
+
 app.listen(8080, ()=>{
     console.log("API online")
 })
