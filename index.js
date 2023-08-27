@@ -64,6 +64,55 @@ app.post('/game', (req, res) => {
     res.statusCode = 200
 })
 
+// Delete Game
+app.delete('/game/:id', (req, res)=>{
+    if(isNaN(req.params.id)){
+        res.sendStatus(400)
+    } else{
+        let id = parseInt(req.params.id)
+        let index = DB.games.findIndex(g=> g.id == id)
+        
+        if(index == -1){
+            res.sendStatus(404)
+        } else{
+            DB.games.splice(index, 1)
+            res.status = 200
+        }
+    }
+    
+})
+
+// Update Data
+app.put('/game/:id', (req, res) => {
+    if(isNaN(req.params.id)){
+        res.sendStatus(400)
+    } else{
+        let id = parseInt(req.params.id)
+        let game = DB.games.find(g=> g.id == id)
+
+        if(game != undefined){
+            let {title, price, year} = req.body
+
+            if(title != undefined){
+                game.title = title
+            }
+
+            if(price != undefined){
+                games.price = price
+            }
+
+            if(year != undefined){
+                games.year = year
+            }
+
+            res.sendStatus(200)
+        } else{
+            res.sendStatus(404)
+        }
+    }
+    
+})
+
 app.listen(8080, ()=>{
     console.log("API online")
 })
